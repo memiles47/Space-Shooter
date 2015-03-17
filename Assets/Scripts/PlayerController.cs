@@ -8,13 +8,31 @@ public class Boundary
 }
 
 public class PlayerController : MonoBehaviour
-  {
-    //Declaration of public variables
+{
+    // Declaration of public variables
     public float speed;
     public float tilt;
     public Boundary boundary;
+    public GameObject shot;
+    public Transform shotSpawn;
+    public float fireRate;
+
+    // Declaration of private variables
+    private float nextFire;
+
+    // Update is called every frame, if the MonoBehaviour is enabled (Since v1.0)
+    public void Update()
+    {
+        if (Input.GetButton("Fire1") && Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            //GameObject clone = 
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation); //as GameObject;
+        }
+
+    }
     
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
