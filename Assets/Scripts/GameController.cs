@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameController : MonoBehaviour
 {
-    // Declaration of public variables
+    // Game Control Variables
     public int hazardCount;
     public float spawnWait;
     public float startWait;
@@ -11,12 +12,21 @@ public class GameController : MonoBehaviour
     public GameObject hazard;
     public Vector3 spawnValues;
 
+    // GUI Variables
+    public GameObject refScoreText;
+    private int score;
+    private Text scoreText;
+
+
     // Start is called just before any of the Update methods is called the first time (Since v1.0)
     public void Start()
     {
+        score = 0;
+        scoreText = refScoreText.GetComponent<Text>();
+        UpdateScore();
         StartCoroutine (SpawnWaves());
     }
-    
+
     IEnumerator SpawnWaves()
     {
         yield return new WaitForSeconds(startWait);
@@ -34,5 +44,17 @@ public class GameController : MonoBehaviour
             }
             yield return new WaitForSeconds(waveWait);
         }
+    }
+
+    public void AddScore(int newScoreValue)
+    {
+        score += newScoreValue;
+        UpdateScore();
+    }
+    
+    void UpdateScore()
+    {
+        scoreText.text = "Score: " + score;
+
     }
 }
